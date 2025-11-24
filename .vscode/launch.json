@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MainMenu",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "proyecto_matrices.Run.main_menu",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
