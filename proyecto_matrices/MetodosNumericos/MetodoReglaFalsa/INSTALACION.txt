@@ -1,0 +1,102 @@
+================================================================================
+MÉTODO DE LA REGLA FALSA - INSTRUCCIONES DE INSTALACIÓN
+================================================================================
+
+REQUISITOS PREVIOS:
+-------------------
+- Python 3.7 o superior instalado
+- pip (gestor de paquetes de Python)
+
+PASOS DE INSTALACIÓN:
+---------------------
+
+1. DESCOMPRIMIR EL PROYECTO
+   Extrae todos los archivos en una carpeta
+
+2. INSTALAR DEPENDENCIAS
+
+   Windows:
+   --------
+   Opción A (Automática):
+   - Doble clic en: install.bat
+   
+   Opción B (Manual):
+   - Abrir CMD o PowerShell en la carpeta del proyecto
+   - Ejecutar: pip install -r requirements.txt
+
+   Linux/Mac:
+   ----------
+   - Abrir terminal en la carpeta del proyecto
+   - Ejecutar: pip3 install -r requirements.txt
+
+3. EJECUTAR LA APLICACIÓN
+
+   Windows:
+   --------
+   Opción A (Interfaz PyQt5 - Recomendada):
+   - Doble clic en: ejecutar_pyqt.bat
+   
+   Opción B (Interfaz Tkinter - Clásica):
+   - Doble clic en: ejecutar_tkinter.bat
+   
+   Opción C (Línea de comandos):
+   - python main.py                    (PyQt5 por defecto)
+   - python main.py --interface tkinter (Tkinter)
+
+   Linux/Mac:
+   ----------
+   - python3 main.py                    (PyQt5 por defecto)
+   - python3 main.py --interface tkinter (Tkinter)
+
+ARCHIVOS INCLUIDOS:
+-------------------
+Archivos principales:
+  - main.py                 : Punto de entrada
+  - interfaz_pyqt.py        : Interfaz PyQt5 (moderna)
+  - interfaz.py             : Interfaz Tkinter (clásica)
+  - matematicas.py          : Funciones matemáticas
+  - metodo_regla_falsa.py   : Algoritmo numérico
+  - grafico.py              : Graficación (Tkinter)
+
+Archivos de configuración:
+  - requirements.txt        : Dependencias
+  - README.md               : Documentación completa
+  - install.bat             : Instalador Windows
+  - ejecutar_pyqt.bat       : Ejecutar PyQt5 (Windows)
+  - ejecutar_tkinter.bat    : Ejecutar Tkinter (Windows)
+  - INSTALACION.txt         : Este archivo
+
+DEPENDENCIAS:
+-------------
+- PyQt5 >= 5.15.0          : Interfaz gráfica moderna
+- matplotlib >= 3.5.0      : Gráficos matemáticos
+- numpy >= 1.21.0          : Cálculos numéricos
+
+SOLUCIÓN DE PROBLEMAS:
+----------------------
+
+Error: "No module named 'PyQt5'"
+  Solución: pip install PyQt5
+
+Error: "No module named 'matplotlib'"
+  Solución: pip install matplotlib
+
+Error: "No module named 'numpy'"
+  Solución: pip install numpy
+
+Error: Python no reconocido
+  Solución: Asegúrate de que Python esté en el PATH del sistema
+
+VERIFICACIÓN DE INSTALACIÓN:
+-----------------------------
+Para verificar que todo está instalado correctamente:
+
+  python -c "import PyQt5; import matplotlib; import numpy; print('OK')"
+
+Si imprime "OK", la instalación es correcta.
+
+SOPORTE:
+--------
+Para más información, consulta el archivo README.md
+
+================================================================================
