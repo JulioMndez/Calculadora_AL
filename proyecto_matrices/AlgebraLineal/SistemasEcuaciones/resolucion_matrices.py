@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 from tkinter import font as tkfont
 from tkinter import scrolledtext
 from pathlib import Path
+from proyecto_matrices.Run.styles import BG_COLOR, BUTTON_COLOR, ACCENT_COLOR, TEXT_COLOR, BUTTON_HOVER_COLOR, BUTTON_FONT, TITLE_FONT, MONO_FONT, style_tk_button, style_label, style_text
 
 EPS = 1e-9
 
@@ -109,60 +110,82 @@ class GaussJordanGUI:
         self.root = root
         self.root.title("Gauss-Jordan — Paso a paso")
         self.root.geometry("980x680")
-        style = ttk.Style()
-        try:
-            style.theme_use('clam')
-        except Exception:
-            pass
-        style.configure('TFrame', background='#f5f7fa')
-        style.configure('TLabel', background='#f5f7fa')
-        style.configure('Header.TLabel', font=('Helvetica', 14, 'bold'), background='#f5f7fa')
-        style.configure('Accent.TButton', font=('Helvetica', 10, 'bold'))
+        # Apply app-wide theme
+        self.root.configure(bg=BG_COLOR)
         self.mono = tkfont.Font(family='Courier', size=10)
-        self.bold = tkfont.Font(family='Helvetica', size=10, weight='bold')
-        top_frame = ttk.Frame(root, padding=10)
+        self.bold = tkfont.Font(family='Arial', size=10, weight='bold')
+
+        top_frame = tk.Frame(root, bg=BG_COLOR, padx=10, pady=8)
         top_frame.pack(side=tk.TOP, fill=tk.X)
-        input_frame = ttk.Frame(top_frame)
+        input_frame = tk.Frame(top_frame, bg=BG_COLOR)
         input_frame.pack(side=tk.LEFT, anchor='nw')
-        ttk.Label(input_frame, text="Número de ecuaciones:", font=('Helvetica', 10)).grid(row=0, column=0, sticky='w')
-        self.n_entry = ttk.Entry(input_frame, width=6)
+
+        lbl1 = tk.Label(input_frame, text="Número de ecuaciones:", bg=BG_COLOR, fg=TEXT_COLOR)
+        style_label(lbl1)
+        lbl1.grid(row=0, column=0, sticky='w')
+        self.n_entry = tk.Entry(input_frame, width=6)
         self.n_entry.grid(row=0, column=1, padx=6)
-        ttk.Label(input_frame, text="Número de incógnitas:", font=('Helvetica', 10)).grid(row=0, column=2, sticky='w')
-        self.v_entry = ttk.Entry(input_frame, width=6)
+        lbl2 = tk.Label(input_frame, text="Número de incógnitas:", bg=BG_COLOR, fg=TEXT_COLOR)
+        style_label(lbl2)
+        lbl2.grid(row=0, column=2, sticky='w')
+        self.v_entry = tk.Entry(input_frame, width=6)
         self.v_entry.grid(row=0, column=3, padx=6)
-        ttk.Button(input_frame, text="Crear matriz", style='Accent.TButton', command=self.crear_matriz).grid(row=0, column=4, padx=8)
-        ttk.Button(input_frame, text="Cargar ejemplo", command=self.cargar_ejemplo).grid(row=0, column=5, padx=8)
-        ttk.Button(input_frame, text="Limpiar", command=self.limpiar_todo).grid(row=0, column=6, padx=8)
-        center = ttk.Frame(root, padding=(10,5))
+
+        btn_crear = tk.Button(input_frame, text="Crear matriz", command=self.crear_matriz)
+        style_tk_button(btn_crear)
+        btn_crear.grid(row=0, column=4, padx=8)
+        btn_ej = tk.Button(input_frame, text="Cargar ejemplo", command=self.cargar_ejemplo)
+        style_tk_button(btn_ej)
+        btn_ej.grid(row=0, column=5, padx=8)
+        btn_lim = tk.Button(input_frame, text="Limpiar", command=self.limpiar_todo)
+        style_tk_button(btn_lim)
+        btn_lim.grid(row=0, column=6, padx=8)
+
+        center = tk.Frame(root, bg=BG_COLOR, padx=10, pady=5)
         center.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-        self.matriz_frame = ttk.LabelFrame(center, text="Matriz aumentada (coeficientes | término)", padding=8)
+        self.matriz_frame = tk.LabelFrame(center, text="Matriz aumentada (coeficientes | término)", bg=BG_COLOR, fg=TEXT_COLOR, padx=8, pady=8)
         self.matriz_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=False)
-        right_frame = ttk.Frame(center)
+        right_frame = tk.Frame(center, bg=BG_COLOR)
         right_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(12,0))
-        controls = ttk.Frame(right_frame)
+        controls = tk.Frame(right_frame, bg=BG_COLOR)
         controls.pack(side=tk.TOP, fill=tk.X)
-        ttk.Button(controls, text="Resolver", command=self.resolver).pack(side=tk.LEFT, padx=4)
-        ttk.Button(controls, text="Exportar RREF (texto)", command=self.exportar_rref).pack(side=tk.LEFT, padx=4)
-        info_box = ttk.LabelFrame(right_frame, text="Información de la solución", padding=8)
+        btn_resolver = tk.Button(controls, text="Resolver", command=self.resolver)
+        style_tk_button(btn_resolver)
+        btn_resolver.pack(side=tk.LEFT, padx=4)
+        btn_export = tk.Button(controls, text="Exportar RREF (texto)", command=self.exportar_rref)
+        style_tk_button(btn_export)
+        btn_export.pack(side=tk.LEFT, padx=4)
+
+        info_box = tk.LabelFrame(right_frame, text="Información de la solución", bg=BG_COLOR, fg=TEXT_COLOR, padx=8, pady=8)
         info_box.pack(side=tk.TOP, fill=tk.X, pady=(8,6))
-        ttk.Label(info_box, text="Tipo de sistema:", font=('Helvetica', 10, 'bold')).grid(row=0, column=0, sticky='w')
-        self.tipo_label = ttk.Label(info_box, text="-", font=('Helvetica', 10))
+        lbl = tk.Label(info_box, text="Tipo de sistema:", bg=BG_COLOR, fg=TEXT_COLOR)
+        lbl.config(font=('Arial', 10, 'bold'))
+        lbl.grid(row=0, column=0, sticky='w')
+        self.tipo_label = tk.Label(info_box, text="-", bg=BG_COLOR, fg=TEXT_COLOR)
         self.tipo_label.grid(row=0, column=1, sticky='w', padx=6)
-        ttk.Label(info_box, text="Columnas pivote:", font=('Helvetica', 10, 'bold')).grid(row=1, column=0, sticky='w')
-        self.pivotes_label = ttk.Label(info_box, text="-", font=('Helvetica', 10))
+        lbl = tk.Label(info_box, text="Columnas pivote:", bg=BG_COLOR, fg=TEXT_COLOR)
+        lbl.config(font=('Arial', 10, 'bold'))
+        lbl.grid(row=1, column=0, sticky='w')
+        self.pivotes_label = tk.Label(info_box, text="-", bg=BG_COLOR, fg=TEXT_COLOR)
         self.pivotes_label.grid(row=1, column=1, sticky='w', padx=6)
-        ttk.Label(info_box, text="Variables libres:", font=('Helvetica', 10, 'bold')).grid(row=2, column=0, sticky='w')
-        self.libres_label = ttk.Label(info_box, text="-", font=('Helvetica', 10))
+        lbl = tk.Label(info_box, text="Variables libres:", bg=BG_COLOR, fg=TEXT_COLOR)
+        lbl.config(font=('Arial', 10, 'bold'))
+        lbl.grid(row=2, column=0, sticky='w')
+        self.libres_label = tk.Label(info_box, text="-", bg=BG_COLOR, fg=TEXT_COLOR)
         self.libres_label.grid(row=2, column=1, sticky='w', padx=6)
-        sol_box = ttk.LabelFrame(right_frame, text="Solución (compacta)", padding=8)
+
+        sol_box = tk.LabelFrame(right_frame, text="Solución (compacta)", bg=BG_COLOR, fg=TEXT_COLOR, padx=8, pady=8)
         sol_box.pack(side=tk.TOP, fill=tk.BOTH, expand=True, pady=(8,6))
-        self.sol_text = scrolledtext.ScrolledText(sol_box, height=8, font=self.mono)
+        self.sol_text = scrolledtext.ScrolledText(sol_box, height=8)
         self.sol_text.pack(fill=tk.BOTH, expand=True)
+        style_text(self.sol_text)
         self.sol_text.configure(state='disabled')
-        pasos_box = ttk.LabelFrame(root, text="Pasos del método (Gauss-Jordan)", padding=8)
+
+        pasos_box = tk.LabelFrame(root, text="Pasos del método (Gauss-Jordan)", bg=BG_COLOR, fg=TEXT_COLOR, padx=8, pady=8)
         pasos_box.pack(side=tk.TOP, fill=tk.BOTH, expand=True, padx=10, pady=(4,10))
-        self.pasos_text = scrolledtext.ScrolledText(pasos_box, font=self.mono)
+        self.pasos_text = scrolledtext.ScrolledText(pasos_box)
         self.pasos_text.pack(fill=tk.BOTH, expand=True)
+        style_text(self.pasos_text)
         self.pasos_text.configure(state='disabled')
         self.entries = []
         self.ultima_rref = None

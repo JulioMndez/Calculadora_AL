@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, scrolledtext
+from proyecto_matrices.Run.styles import BG_COLOR, BUTTON_COLOR, ACCENT_COLOR, TEXT_COLOR, BUTTON_HOVER_COLOR, BUTTON_FONT, TITLE_FONT, style_tk_button, style_label, style_text
 
 def parsear_valor(valor_str: str) -> float:
     valor_str = valor_str.strip()
@@ -69,18 +70,30 @@ class DeterminanteGUI:
         self.root = root
         root.title("Cálculo de Determinante")
         root.geometry("750x600")
+        root.configure(bg=BG_COLOR)
+
         self.label = tk.Label(root, text="Ingrese el tamaño de la matriz:")
+        style_label(self.label)
         self.label.pack(pady=5)
+
         self.entry_n = tk.Entry(root)
         self.entry_n.pack(pady=5)
+
         self.boton_crear = tk.Button(root, text="Crear campos de matriz", command=self.crear_campos)
+        style_tk_button(self.boton_crear)
         self.boton_crear.pack(pady=5)
-        self.frame_matriz = tk.Frame(root)
+
+        self.frame_matriz = tk.Frame(root, bg=BG_COLOR)
         self.frame_matriz.pack(pady=10)
+
         self.boton_calcular = tk.Button(root, text="Calcular determinante", command=self.calcular)
+        style_tk_button(self.boton_calcular)
         self.boton_calcular.pack(pady=5)
+
         self.resultado_texto = scrolledtext.ScrolledText(root, height=25)
         self.resultado_texto.pack(pady=10, fill=tk.BOTH, expand=True)
+        style_text(self.resultado_texto)
+
         self.campos = []
 
     def crear_campos(self):
@@ -97,7 +110,7 @@ class DeterminanteGUI:
         for i in range(n):
             fila_campos = []
             for j in range(n):
-                e = tk.Entry(self.frame_matriz, width=6)
+                e = tk.Entry(self.frame_matriz, width=6, justify='center')
                 e.grid(row=i, column=j, padx=2, pady=2)
                 fila_campos.append(e)
             self.campos.append(fila_campos)

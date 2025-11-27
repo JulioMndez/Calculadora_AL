@@ -2,7 +2,8 @@
 Cramer GUI (módulo movido a paquete SistemasEcuaciones)
 """
 import tkinter as tk
-from tkinter import ttk, messagebox, simpledialog
+from tkinter import messagebox, simpledialog, ttk
+from proyecto_matrices.Run.styles import BG_COLOR, BUTTON_COLOR, ACCENT_COLOR, TEXT_COLOR, BUTTON_HOVER_COLOR, BUTTON_FONT, TITLE_FONT, MONO_FONT, style_tk_button, style_label, style_text
 
 def copiar_matriz(M):
     return [fila[:] for fila in M]
@@ -84,11 +85,12 @@ class CramerGUI(tk.Tk):
         self.title("Cramer paso a paso (GUI)")
         self.geometry("980x640")
         self.minsize(900, 560)
+        self.configure(bg=BG_COLOR)
         self.n = tk.IntVar(value=3)
         self.prec = tk.IntVar(value=6)
         self.entries_A = []
         self.entries_b = []
-        self.font_mono = ("Courier New", 10)
+        self.font_mono = MONO_FONT
         self._crear_menu()
         self._crear_widgets()
         self._construir_cuadricula()
@@ -111,21 +113,29 @@ class CramerGUI(tk.Tk):
         self.config(menu=menubar)
 
     def _crear_widgets(self):
-        top = ttk.Frame(self, padding=8)
+        top = tk.Frame(self, bg=BG_COLOR, padx=8, pady=8)
         top.pack(fill="x")
-        ttk.Label(top, text="Tamaño n (A es n×n):").pack(side="left")
-        self.spin_n = ttk.Spinbox(top, from_=1, to=10, width=4, textvariable=self.n, command=self._construir_cuadricula, justify="center")
+        l = tk.Label(top, text="Tamaño n (A es n×n):", bg=BG_COLOR, fg=TEXT_COLOR)
+        l.pack(side="left")
+        self.spin_n = tk.Spinbox(top, from_=1, to=10, width=4, textvariable=self.n, command=self._construir_cuadricula, justify="center")
         self.spin_n.pack(side="left", padx=(6, 12))
-        ttk.Button(top, text="Construir matriz", command=self._construir_cuadricula).pack(side="left", padx=4)
-        ttk.Button(top, text="Resolver por Cramer", command=self._resolver).pack(side="left", padx=4)
-        ttk.Button(top, text="Limpiar", command=self._limpiar_log).pack(side="left", padx=4)
-        self.frame_matriz = ttk.Frame(self)
+        b1 = tk.Button(top, text="Construir matriz", command=self._construir_cuadricula)
+        style_tk_button(b1)
+        b1.pack(side="left", padx=4)
+        b2 = tk.Button(top, text="Resolver por Cramer", command=self._resolver)
+        style_tk_button(b2)
+        b2.pack(side="left", padx=4)
+        b3 = tk.Button(top, text="Limpiar", command=self._limpiar_log)
+        style_tk_button(b3)
+        b3.pack(side="left", padx=4)
+        self.frame_matriz = tk.Frame(self, bg=BG_COLOR)
         self.frame_matriz.pack(side="left", anchor="n")
-        bottom = ttk.Frame(self, padding=(8, 0, 8, 8))
-        bottom.pack(fill="both", expand=True)
-        ttk.Label(bottom, text="Explicación paso a paso:").pack(anchor="w")
+        bottom = tk.Frame(self, bg=BG_COLOR, padx=8)
+        bottom.pack(fill="both", expand=True, pady=(0,8))
+        ttk_label = tk.Label(bottom, text="Explicación paso a paso:", bg=BG_COLOR, fg=TEXT_COLOR)
+        ttk_label.pack(anchor="w")
         self.text = tk.Text(bottom, wrap="word", font=self.font_mono, undo=False)
-        self.scroll = ttk.Scrollbar(bottom, orient="vertical", command=self.text.yview)
+        self.scroll = tk.Scrollbar(bottom, orient="vertical", command=self.text.yview)
         self.text.configure(yscrollcommand=self.scroll.set)
         self.text.pack(side="left", fill="both", expand=True)
         self.scroll.pack(side="left", fill="y")

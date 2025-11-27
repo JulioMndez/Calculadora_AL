@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, scrolledtext, font
 import random
+from proyecto_matrices.Run.styles import BG_COLOR, BUTTON_COLOR, ACCENT_COLOR, TEXT_COLOR, BUTTON_HOVER_COLOR, BUTTON_FONT, TITLE_FONT, MONO_FONT, style_tk_button, style_text, style_label
 
 def matrix_to_text(matrix, tol=1e-12):
     if not matrix:
@@ -120,63 +121,57 @@ class AppInversa:
         self.root = root
         self.root.title("Inversión de Matriz (Gauss-Jordan) con Verificación")
         self.root.geometry("950x700")
-        self.root.configure(bg="#2E2E2E")
-        self.BG_COLOR = "#2E2E2E"
+        self.root.configure(bg=BG_COLOR)
+        self.BG_COLOR = BG_COLOR
         self.FRAME_COLOR = "#3C3C3C"
         self.TEXT_AREA_BG = "#1E1E1E"
-        self.TEXT_COLOR = "#D4D4D4"
-        self.BUTTON_GREEN = "#4CAF50"
-        self.BUTTON_GREEN_HOVER = "#81C784"
-        self.BUTTON_RED = "#D32F2F"
-        self.BUTTON_RED_HOVER = "#E57373"
-        self.BUTTON_BLUE = "#007ACC"
-        self.BUTTON_BLUE_HOVER = "#00AFFF"
-        self.BUTTON_PURPLE = "#9C27B0"
-        self.BUTTON_PURPLE_HOVER = "#BA68C8"
+        self.TEXT_COLOR = TEXT_COLOR
+        self.BUTTON_COLOR = BUTTON_COLOR
+        self.BUTTON_HOVER = BUTTON_HOVER_COLOR
+        self.ACCENT_COLOR = ACCENT_COLOR
         self.TITLE_FONT = font.Font(family="Arial", size=14, weight="bold")
         self.DEFAULT_FONT = font.Font(family="Arial", size=10)
-        self.BUTTON_FONT = font.Font(family="Arial", size=10, weight="bold")
-        self.MONO_FONT = font.Font(family="Courier New", size=10)
+        self.BUTTON_FONT = font.Font(family="Arial", size=11, weight="bold")
+        self.MONO_FONT = font.Font(family="Arial", size=10)
         self.entradas_matriz = []
         main_frame = tk.Frame(root, bg=self.BG_COLOR)
         main_frame.pack(padx=10, pady=10, fill="both", expand=True)
         setup_frame = tk.Frame(main_frame, bg=self.FRAME_COLOR, relief="ridge", borderwidth=2, padx=10, pady=10)
         setup_frame.pack(side="left", fill="y", padx=(0, 10))
-        tk.Label(setup_frame, text="Configuración", font=self.TITLE_FONT, bg=self.FRAME_COLOR, fg="#FFFFFF").pack(pady=(0, 15))
+        l_conf = tk.Label(setup_frame, text="Configuración", font=self.TITLE_FONT, bg=self.FRAME_COLOR, fg=TEXT_COLOR)
+        l_conf.pack(pady=(0, 15))
         dim_frame = tk.Frame(setup_frame, bg=self.FRAME_COLOR)
         dim_frame.pack(pady=5, padx=10)
-        tk.Label(dim_frame, text="Dimensión (N x N):", font=self.DEFAULT_FONT, bg=self.FRAME_COLOR, fg="#FFFFFF").grid(row=0, column=0, sticky="w")
+        tk.Label(dim_frame, text="Dimensión (N x N):", font=self.DEFAULT_FONT, bg=self.FRAME_COLOR, fg=TEXT_COLOR).grid(row=0, column=0, sticky="w")
         self.dim_var = tk.StringVar(value="3")
         self.dim_entry = tk.Entry(dim_frame, textvariable=self.dim_var, width=5, justify="center")
         self.dim_entry.grid(row=0, column=1, padx=5)
         actions_frame = tk.Frame(setup_frame, bg=self.FRAME_COLOR)
         actions_frame.pack(pady=15)
-        self.btn_crear = tk.Button(actions_frame, text="Crear Matriz", command=self.crear_grid_matriz, font=self.BUTTON_FONT, bg=self.BUTTON_BLUE, fg="#FFFFFF", relief="flat", activebackground=self.BUTTON_BLUE_HOVER, padx=5, pady=5)
+        self.btn_crear = tk.Button(actions_frame, text="Crear Matriz", command=self.crear_grid_matriz)
+        style_tk_button(self.btn_crear)
         self.btn_crear.pack(side="left", padx=5)
-        self.btn_ejemplo = tk.Button(actions_frame, text="Ejemplo Aleatorio", command=self.generar_ejemplo_aleatorio, font=self.BUTTON_FONT, bg=self.BUTTON_PURPLE, fg="#FFFFFF", relief="flat", activebackground=self.BUTTON_PURPLE_HOVER, padx=5, pady=5)
+        self.btn_ejemplo = tk.Button(actions_frame, text="Ejemplo Aleatorio", command=self.generar_ejemplo_aleatorio)
+        style_tk_button(self.btn_ejemplo)
         self.btn_ejemplo.pack(side="left", padx=5)
-        self.btn_limpiar = tk.Button(actions_frame, text="Limpiar Matriz", command=self.limpiar_matriz, font=self.BUTTON_FONT, bg=self.BUTTON_RED, fg="#FFFFFF", relief="flat", activebackground=self.BUTTON_RED_HOVER, padx=5, pady=5)
+        self.btn_limpiar = tk.Button(actions_frame, text="Limpiar Matriz", command=self.limpiar_matriz)
+        style_tk_button(self.btn_limpiar)
         self.btn_limpiar.pack(side="left", padx=5)
-        self.btn_crear.bind("<Enter>", lambda e: e.widget.config(bg=self.BUTTON_BLUE_HOVER))
-        self.btn_crear.bind("<Leave>", lambda e: e.widget.config(bg=self.BUTTON_BLUE))
-        self.btn_ejemplo.bind("<Enter>", lambda e: e.widget.config(bg=self.BUTTON_PURPLE_HOVER))
-        self.btn_ejemplo.bind("<Leave>", lambda e: e.widget.config(bg=self.BUTTON_PURPLE))
-        self.btn_limpiar.bind("<Enter>", lambda e: e.widget.config(bg=self.BUTTON_RED_HOVER))
-        self.btn_limpiar.bind("<Leave>", lambda e: e.widget.config(bg=self.BUTTON_RED))
         self.matriz_frame = tk.Frame(setup_frame, bg=self.FRAME_COLOR)
         self.matriz_frame.pack(pady=10, padx=10, expand=True, fill="both")
-        self.btn_calcular = tk.Button(setup_frame, text="Calcular Inversa y Verificar", command=self.calcular_inversa, font=self.BUTTON_FONT, bg=self.BUTTON_GREEN, fg="#FFFFFF", relief="flat", activebackground=self.BUTTON_GREEN_HOVER, height=2)
+        self.btn_calcular = tk.Button(setup_frame, text="Calcular Inversa y Verificar", command=self.calcular_inversa, height=2)
+        style_tk_button(self.btn_calcular)
         self.btn_calcular.pack(side="bottom", pady=10, fill="x")
         results_frame = tk.Frame(main_frame, bg=self.FRAME_COLOR, relief="ridge", borderwidth=2)
         results_frame.pack(side="right", fill="both", expand=True)
-        tk.Label(results_frame, text="Resultado Paso a Paso", font=self.TITLE_FONT, bg=self.FRAME_COLOR, fg="#FFFFFF").pack(pady=10)
+        tk.Label(results_frame, text="Resultado Paso a Paso", font=self.TITLE_FONT, bg=self.FRAME_COLOR, fg=TEXT_COLOR).pack(pady=10)
         text_frame = tk.Frame(results_frame, bg=self.TEXT_AREA_BG, relief="sunken", borderwidth=1)
         text_frame.pack(pady=5, padx=10, expand=True, fill="both")
         text_frame.grid_rowconfigure(0, weight=1)
         text_frame.grid_columnconfigure(0, weight=1)
         v_scroll = ttk.Scrollbar(text_frame, orient="vertical")
         h_scroll = ttk.Scrollbar(text_frame, orient="horizontal")
-        self.res = tk.Text(text_frame, wrap=tk.NONE, height=20, font=self.MONO_FONT, bg=self.TEXT_AREA_BG, fg=self.TEXT_COLOR, relief="flat", borderwidth=0, insertbackground="#FFFFFF", yscrollcommand=v_scroll.set, xscrollcommand=h_scroll.set)
+        self.res = tk.Text(text_frame, wrap=tk.NONE, height=20, font=self.MONO_FONT, bg=self.TEXT_AREA_BG, fg=self.TEXT_COLOR, relief="flat", borderwidth=0, insertbackground=TEXT_COLOR, yscrollcommand=v_scroll.set, xscrollcommand=h_scroll.set)
         v_scroll.config(command=self.res.yview)
         h_scroll.config(command=self.res.xview)
         self.res.grid(row=0, column=0, sticky="nsew")

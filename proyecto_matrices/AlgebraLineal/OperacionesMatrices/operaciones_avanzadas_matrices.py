@@ -1,5 +1,6 @@
 import tkinter as tk
-from tkinter import ttk, simpledialog, messagebox
+from tkinter import simpledialog, messagebox
+from proyecto_matrices.Run.styles import BG_COLOR, BUTTON_COLOR, ACCENT_COLOR, TEXT_COLOR, BUTTON_HOVER_COLOR, BUTTON_FONT, TITLE_FONT, style_tk_button, style_label, style_text
 
 def leer_entero_positivo(mensaje, minimo=1, parent=None):
     """Solicita un entero positivo mediante un diálogo."""
@@ -61,14 +62,16 @@ def imprimir_matriz(matriz):
 
 def main():
     ventana = tk.Toplevel()
-    ventana.title("Trasponer Matriz")
+    ventana.title("Operaciones Avanzadas")
     ventana.geometry("700x600")
+    ventana.configure(bg=BG_COLOR)
 
-    frame = ttk.Frame(ventana, padding=10)
+    frame = tk.Frame(ventana, bg=BG_COLOR, padx=10, pady=10)
     frame.pack(expand=True, fill="both")
 
-    text_box = tk.Text(frame, wrap="word", font=("Consolas", 10))
+    text_box = tk.Text(frame, wrap="word")
     text_box.pack(expand=True, fill="both")
+    style_text(text_box)
 
     filas = leer_entero_positivo("Número de filas de la matriz:", parent=ventana)
     if filas is None:
@@ -95,7 +98,9 @@ def main():
     text_box.insert(tk.END, f"\n===== MATRIZ TRASPUESTA =====\n{imprimir_matriz(matriz_traspuesta)}\n")
     text_box.see(tk.END)
 
-    ttk.Button(frame, text="Cerrar", command=ventana.destroy).pack(pady=10)
+    btn_cerrar = tk.Button(frame, text="Cerrar", command=ventana.destroy)
+    style_tk_button(btn_cerrar)
+    btn_cerrar.pack(pady=10)
 
     ventana.mainloop()
 
